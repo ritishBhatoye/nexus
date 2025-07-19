@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View, Text, useWindowDimensions } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+import { Ionicons } from "@expo/vector-icons";
 
 interface TabsSliderProps {
-  tabLabel: string[];
+  tabLabel: TabLabelType[];
   TabScreen: React.ReactNode[];
 }
 
@@ -11,20 +12,21 @@ const TabsSlider: React.FC<TabsSliderProps> = ({ tabLabel, TabScreen }) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [routes] = useState(
-    tabLabel.map((label, idx) => ({ key: idx.toString(), title: label }))
+    tabLabel.map((tab, idx) => ({
+      key: idx.toString(),
+      title: tab.label,
+      icon: tab.icon,
+    }))
   );
 
   // Map each tab to a scene
   const renderScene = SceneMap(
-    tabLabel.reduce(
-      (scenes, label, idx) => {
-        scenes[idx.toString()] = () => (
-          <View style={{ flex: 1 }}>{TabScreen[idx]}</View>
-        );
-        return scenes;
-      },
-      {} as { [key: string]: React.ComponentType }
-    )
+    tabLabel.reduce((scenes, label, idx) => {
+      scenes[idx.toString()] = () => (
+        <View style={{ flex: 1 }}>{TabScreen[idx]}</View>
+      );
+      return scenes;
+    }, {} as { [key: string]: React.ComponentType })
   );
 
   // Custom TabBar for styling
@@ -65,19 +67,28 @@ const TabsSlider: React.FC<TabsSliderProps> = ({ tabLabel, TabScreen }) => {
         route,
         focused,
       }: {
-        route: { title: string };
+        route: { title: string; icon?: { name: string; color: string } };
         focused: boolean;
       }) => (
-        <Text
-          style={{
-            color: focused ? "#000" : "#888",
-            fontWeight: focused ? "bold" : "normal",
-            fontSize: 16,
-            textAlign: "center",
-          }}
-        >
-          {route.title}
-        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+          {route.icon && (
+            <Ionicons
+              name={route.icon.name as any}
+              size={20}
+              color={route.icon.color || (focused ? "#000" : "#888")}
+            />
+          )}
+          <Text
+            style={{
+              color: focused ? "#000" : "#888",
+              fontWeight: focused ? "bold" : "normal",
+              fontSize: 16,
+              textAlign: "center",
+            }}
+          >
+            {route.title}
+          </Text>
+        </View>
       )}
     />
   );
