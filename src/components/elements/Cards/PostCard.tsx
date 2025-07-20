@@ -91,41 +91,38 @@ const PostCard = ({ post, onPress }: props) => {
       </View>
 
       {/* Footer with interactive buttons */}
-      <View className="flex-row items-center justify-between pt-2 border-t border-gray-100">
-        <View className="flex-row items-center gap-4">
-          {/* Like button with TanStack Query */}
-          <TouchableOpacity
-            className="flex-row items-center gap-1"
-            onPress={handleLike}
-            disabled={likePostMutation.isPending}
+
+      <View className="flex-row flex items-center justify-evenly gap-4 ">
+        {/* Like button with TanStack Query */}
+        <TouchableOpacity
+          className="flex-row items-center gap-1"
+          onPress={handleLike}
+          disabled={likePostMutation.isPending}
+        >
+          <Ionicons
+            name={post.user_vote === "up" ? "heart" : "heart-outline"}
+            size={20}
+            color={post.user_vote === "up" ? "#FF6347" : "#666"}
+          />
+          <Text
+            className={`text-xs ${
+              post.user_vote === "up" ? "text-red-500" : "text-gray-500"
+            }`}
           >
-            <Ionicons
-              name={post.user_vote === "up" ? "heart" : "heart-outline"}
-              size={16}
-              color={post.user_vote === "up" ? "#FF6347" : "#666"}
-            />
-            <Text
-              className={`text-xs ${
-                post.user_vote === "up" ? "text-red-500" : "text-gray-500"
-              }`}
-            >
-              {post.vote_count || 0}
-            </Text>
-          </TouchableOpacity>
+            {post.vote_count || 0}
+          </Text>
+        </TouchableOpacity>
 
-          <View className="flex-row items-center gap-1">
-            <Ionicons name="chatbubble-outline" size={16} color="#666" />
-            <Text className="text-xs text-gray-500">
-              {post.comment_count || 0}
-            </Text>
-          </View>
+        <View className="flex-row items-center gap-1">
+          <Ionicons name="chatbubble-outline" size={20} color="#666" />
+          <Text className="text-xs text-gray-500">
+            {post.comment_count || 0}
+          </Text>
+        </View>
 
-          <View className="flex-row items-center gap-1">
-            <Ionicons name="eye-outline" size={16} color="#666" />
-            <Text className="text-xs text-gray-500">
-              {post.view_count || 0}
-            </Text>
-          </View>
+        <View className="flex-row items-center gap-1">
+          <Ionicons name="eye-outline" size={20} color="#666" />
+          <Text className="text-xs text-gray-500">{post.view_count || 0}</Text>
         </View>
       </View>
     </TouchableOpacity>

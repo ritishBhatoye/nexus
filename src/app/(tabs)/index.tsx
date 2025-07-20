@@ -1,17 +1,20 @@
 import TabsSlider from "@/src/components/elements/TabsSlider";
+import PostFeed from "@/src/components/home/PostFeed";
 import { homeTabsData } from "@/src/constants/home";
 import { Link } from "expo-router";
 import React from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   return (
-    <SafeAreaView className="">
-      <TabsSlider tabLabel={homeTabsData} TabScreen={[]}></TabsSlider>
-      <Link href="/(auth)/register">
-        <Text>Home</Text>
-      </Link>
-    </SafeAreaView>
+    <>
+      <TabsSlider
+        tabLabel={homeTabsData as any}
+        TabScreen={[<PostFeed />, <PostFeed />, <></>, <PostFeed />]}
+      />
+    </>
   );
 };
 

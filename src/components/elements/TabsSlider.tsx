@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, useWindowDimensions } from "react-native";
+import { View, Text, useWindowDimensions, Alert } from "react-native";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 interface TabsSliderProps {
   tabLabel: TabLabelType[];
@@ -11,17 +11,17 @@ interface TabsSliderProps {
 const TabsSlider: React.FC<TabsSliderProps> = ({ tabLabel, TabScreen }) => {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
-  const [routes] = useState(
-    tabLabel.map((tab, idx) => ({
-      key: idx.toString(),
-      title: tab.label,
-      icon: tab.icon,
-    }))
-  );
+
+  // Create routes from tabLabel - this will update when tabLabel changes
+  const routes = tabLabel.map((tab, idx) => ({
+    key: idx.toString(),
+    title: tab.label,
+    icon: tab.icon,
+  }));
 
   // Map each tab to a scene
   const renderScene = SceneMap(
-    tabLabel.reduce((scenes, label, idx) => {
+    tabLabel.reduce((scenes, _label, idx) => {
       scenes[idx.toString()] = () => (
         <View style={{ flex: 1 }}>{TabScreen[idx]}</View>
       );
@@ -69,27 +69,39 @@ const TabsSlider: React.FC<TabsSliderProps> = ({ tabLabel, TabScreen }) => {
       }: {
         route: { title: string; icon?: { name: string; color: string } };
         focused: boolean;
-      }) => (
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          {route.icon && (
-            <Ionicons
-              name={route.icon.name as any}
-              size={20}
-              color={route.icon.color || (focused ? "#000" : "#888")}
-            />
-          )}
-          <Text
+      }) => {
+        return (
+          <View
             style={{
-              color: focused ? "#000" : "#888",
-              fontWeight: focused ? "bold" : "normal",
-              fontSize: 16,
-              textAlign: "center",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 4,
+              paddingHorizontal: 8,
+              paddingVertical: 8,
             }}
           >
-            {route.title}
-          </Text>
-        </View>
-      )}
+            {/* Conditional icon rendering */}
+            {route.icon && route.icon.name ? (
+              <Ionicons
+                name={route.icon.name as any}
+                size={18}
+                color={focused ? route.icon.color : "#888"}
+              />
+            ) : null}
+
+            <Text
+              style={{
+                color: focused ? "#000" : "#888",
+                fontWeight: focused ? "bold" : "normal",
+                fontSize: 14,
+                textAlign: "center",
+              }}
+            >
+              {route.title || "No Title"}
+            </Text>
+          </View>
+        );
+      }}
     />
   );
 

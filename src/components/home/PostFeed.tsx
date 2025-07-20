@@ -14,8 +14,9 @@ const PostFeed = () => {
   // TanStack Query hook - handles server state
   const { data: posts, isLoading, error, refetch, isRefetching } = usePosts();
 
+  // Debug logging
   // Zustand hook - handles UI state
-  const { activeTab, setSelectedPostId } = useAppStore();
+  const { setSelectedPostId } = useAppStore();
 
   // Handle post selection
   const handlePostPress = (postId: number) => {
@@ -38,7 +39,9 @@ const PostFeed = () => {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={{ color: "red" }}>Error loading posts</Text>
-        <Text style={{ marginTop: 5 }}>{error.message}</Text>
+        <Text className="text-red-500" style={{ marginTop: 5 }}>
+          {error.message}
+        </Text>
       </View>
     );
   }

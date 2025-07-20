@@ -1,5 +1,5 @@
 // Base API configuration
-const API_BASE_URL = "http://localhost:3000/api"; // Replace with your backend URL
+const API_BASE_URL = "https://nexuscommunityapi.vercel.app/api";
 
 // Generic API function
 async function apiRequest<T>(

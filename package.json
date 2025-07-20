@@ -37,13 +37,15 @@
     "react-dom": "^19.1.0",
     "react-native": "0.79.5",
     "react-native-css-interop": "^0.1.22",
+    "react-native-pager-view": "^6.8.1",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "^15.2.0",
     "react-native-tab-view": "^4.1.2",
     "yup": "^1.6.1",
-    "zustand": "^5.0.6"
+    "zustand": "^5.0.6",
+    "@expo/vector-icons": "^14.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

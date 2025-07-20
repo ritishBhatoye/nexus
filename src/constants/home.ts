@@ -1,6 +1,7 @@
 export const homeTabsData: TabLabelType[] = [
   {
     icon: { name: "heart-outline", color: "#FFD700" },
+    label: "Favorites",
   },
   {
     icon: { name: "sparkles", color: "#0066FF" },

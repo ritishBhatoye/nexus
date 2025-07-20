@@ -34,8 +34,12 @@ interface CreatePostData {
 
 // API functions
 const fetchPosts = async (): Promise<Post[]> => {
-  const response = await apiRequest<{ data: Post[] }>("/posts");
-  return response.data;
+  try {
+    const response = await apiRequest<{ data: Post[] }>("/posts");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
 };
 
 const createPost = async (postData: CreatePostData): Promise<Post> => {
